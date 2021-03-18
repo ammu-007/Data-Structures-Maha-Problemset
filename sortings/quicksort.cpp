@@ -31,32 +31,37 @@ using namespace std;
 const int N = int(1e5 + 3);
 #define modulo 1000000007
 
-int partition(vector<int> &arr, int l, int r, int n)
+int partition(vector<int> &arr, int l, int r)
 {
     int pivot = arr[l];
     int i = l;
-    int j = l;
-    do{
-        do{
+    int j = r;
+    do
+    {
+        do
+        {
             i++;
         } while (i < r && arr[i] <= pivot);
-        do{
-            j++;
+        do
+        {
+            j--;
         } while (j >= 0 && arr[j] > pivot);
-        if(i<j)
+        if (i < j)
         {
             swap(arr[i], arr[j]);
         }
     } while (i < j);
     swap(arr[l], arr[j]);
-    return 
+    return j;
 }
 
 void quicksort(vector<int> &arr, int l, int r)
 {
-    if(l<r)
+    if (l < r)
     {
-        int split = partition(arr, l, r, n);
+        int split = partition(arr, l, r);
+        quicksort(arr, l, split);
+        quicksort(arr, split + 1, r);
     }
 }
 
@@ -65,6 +70,7 @@ void solve()
     input(n);
     scan(arr, n);
     quicksort(arr, 0, n);
+    print(arr);
 }
 
 int main()
