@@ -33,6 +33,31 @@ const int N = int(1e5 + 3);
 
 void solve()
 {
+    inputs(n, m);
+    vector<pair<int, int>> arr(m);
+    for (int i = 0; i < m; i++)
+    {
+        inputs(container, matches);
+        arr[i] = {matches, container};
+    }
+    sort(arr.begin(), arr.end(), greater<pair<int, int>>());
+    int result = 0;
+    int i = 0;
+    while (n > 0 && i < m)
+    {
+        if (arr[i].second < n)
+        {
+            result += arr[i].first * arr[i].second;
+            n -= arr[i].second;
+        }
+        else
+        {
+            result += n * arr[i].first;
+            break;
+        }
+        i++;
+    }
+    cout << result << "\n";
 }
 
 int main()
@@ -41,11 +66,6 @@ int main()
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-    int test_cases;
-    cin >> test_cases;
-    while (test_cases--)
-    {
-        solve();
-    }
+    solve();
     return 0;
 }

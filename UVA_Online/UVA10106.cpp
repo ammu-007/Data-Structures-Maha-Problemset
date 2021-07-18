@@ -7,10 +7,10 @@ using namespace std;
         cin >> arr[i];
 #define inputs(n, m) \
     int n, m;        \
-    scanf("%d%d", &n, &m)
+    cin >> n >> m
 #define input(n) \
     int n;       \
-    scanf("%d", &n)
+    cin >> n
 #define print(any)        \
     for (auto i : any)    \
         cout << i << " "; \
@@ -30,9 +30,34 @@ using namespace std;
 
 const int N = int(1e5 + 3);
 #define modulo 1000000007
-
-void solve()
+const int MAX = 600;
+void product(string a, string b)
 {
+    int arr[MAX];
+    memset(arr, 0, sizeof(arr));
+    reverse(a.begin(), a.end());
+    reverse(b.begin(), b.end());
+    int max_idx = a.size() + b.size() + 1;
+    for (int i = 0; i < a.size(); i++)
+    {
+        for (int j = 0; j < b.size(); j++)
+        {
+            arr[i + j] += (a[i] - '0') * (b[j] - '0');
+        }
+    }
+    for (int i = 0; i < max_idx + 1; i++)
+    {
+        arr[i + 1] += arr[i] / 10;
+        arr[i] %= 10;
+    }
+    int i = max_idx;
+    while (i > 0 && arr[i] == 0)
+    {
+        i--;
+    }
+    for (; i >= 0; i--)
+        cout << arr[i];
+    nl;
 }
 
 int main()
@@ -41,11 +66,11 @@ int main()
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-    int test_cases;
-    cin >> test_cases;
-    while (test_cases--)
+    string a, b;
+    while (cin >> a)
     {
-        solve();
+        cin >> b;
+        product(a, b);
     }
     return 0;
 }

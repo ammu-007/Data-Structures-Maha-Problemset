@@ -7,10 +7,10 @@ using namespace std;
         cin >> arr[i];
 #define inputs(n, m) \
     int n, m;        \
-    scanf("%d%d", &n, &m)
+    cin >> n >> m
 #define input(n) \
     int n;       \
-    scanf("%d", &n)
+    cin >> n
 #define print(any)        \
     for (auto i : any)    \
         cout << i << " "; \
@@ -31,8 +31,45 @@ using namespace std;
 const int N = int(1e5 + 3);
 #define modulo 1000000007
 
+int partition(int l, int r, vector<int> &arr)
+{
+    if (l == r)
+        return l;
+    srand(time(NULL));
+    int random_pivot = rand() % (r - l) + l;
+    swap(arr[r], arr[random_pivot]);
+    int i = l;
+    int pivot = arr[r];
+    for (int j = l; j <= r - 1; j++)
+    {
+        if (arr[j] <= pivot)
+            swap(arr[i++], arr[j]);
+    }
+    swap(arr[i], arr[r]);
+    return i;
+}
+
+int find_k_element(int l, int r, int k, vector<int> arr)
+{
+    if (l <= r)
+    {
+        int split = partition(l, r, arr);
+        if (split == k)
+            return arr[k];
+        else if (split > k)
+            return find_k_element(l, split - 1, k, arr);
+        else
+            return find_k_element(split + 1, r, k, arr);
+    }
+    return -1;
+}
+
 void solve()
 {
+    input(n);
+    scan(arr, n);
+    input(k);
+    cout << find_k_element(0, n - 1, k - 1, arr);
 }
 
 int main()

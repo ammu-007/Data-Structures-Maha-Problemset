@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <chrono>
 using namespace std;
-
-using namespace std::chrono;
 
 #define deb(x) cout << #x << ": " << x << endl
 #define scan(arr, n)            \
@@ -49,7 +46,8 @@ void union_(int src, int dest, vector<int> &parent)
 {
     int s = root(src, parent);
     int d = root(dest, parent);
-    parent[d] = s;
+    if (s != d)
+        parent[d] = s;
 }
 
 void kruskal(int v, int edges, vll &g)
@@ -73,7 +71,6 @@ void kruskal(int v, int edges, vll &g)
         }
     }
     cout << min_cost << "\n";
-    // print(parent);
 }
 
 int main()
@@ -82,30 +79,20 @@ int main()
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-    inputs(vertices, edges);
-    vll g(edges + 1);
-    for (int i = 0; i < edges; i++)
+    input(vertices);
+    int edges = ((vertices - 1) * vertices) / 2;
+    vll g;
+    for (int i = 1; i <= vertices; i++)
     {
-        inputs(src, dest);
-        input(wt);
-        g[i] = {wt, {src, dest}};
+        for (int j = 1; j <= vertices; j++)
+        {
+            if (i != j)
+            {
+                g.push_back({i ^ j, {i, j}});
+            }
+        }
     }
     sort(g.begin(), g.end());
-
-    auto start = high_resolution_clock::now();
-
     kruskal(vertices, edges, g);
-
-    // Get ending timepoint
-    auto stop = high_resolution_clock::now();
-
-    // Get duration. Substart timepoints to
-    // get durarion. To cast it to proper unit
-    // use duration cast method
-    auto duration = duration_cast<microseconds>(stop - start);
-    cout << "Time taken by function: " << duration.count() << " microseconds" << endl;
     return 0;
 }
-
-// 614708
-// Time taken by function: 2793405 microseconds

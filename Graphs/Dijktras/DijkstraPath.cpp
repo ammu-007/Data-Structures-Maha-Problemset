@@ -21,6 +21,8 @@ vector<int> Dijkstra(vector<vector<PI>> &g, vector<int> &distance, int source)
         pq.pop();
         if (visited[curr_src] == 1)
             continue;
+        if (distance[curr_src] < top.first)
+            continue; //Optimization
         visited[curr_src] = 1;
         for (auto itr : g[curr_src])
         {
@@ -46,11 +48,9 @@ void shortestPath(vector<vector<PI>> &g, int source, int end, int v)
 {
     vector<int> distance(v, __INT_MAX__);
     vector<int> parent = Dijkstra(g, distance, source);
-    for (int i : parent)
-        cout << "i: " << i << endl;
-    vector<int> path;
     if (distance[end] == INT_MAX)
         cout << "Not reachable\n";
+    vector<int> path;
     for (int at = end; at != -1; at = parent[at])
         path.push_back(at);
 

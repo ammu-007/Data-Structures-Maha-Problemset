@@ -33,6 +33,52 @@ const int N = int(1e5 + 3);
 
 void solve()
 {
+    input(n);
+    scan(arr, n);
+    vector<int> next_max(n, n);
+    stack<int> stk;
+    for (int i = 0; i < n; i++)
+    {
+        if (stk.empty() || arr[i] <= arr[stk.top()])
+        {
+            stk.push(i);
+        }
+        else
+        {
+            while (!stk.empty()) //&& arr[stk.top()] <= arr[i])
+            {
+                next_max[stk.top()] = i;
+                stk.pop();
+            }
+            stk.push(i);
+        }
+    }
+    while (!stk.empty())
+        stk.pop();
+
+    vector<int> prev_max(n, -1);
+    for (int i = n - 1; i >= 0; i--)
+    {
+        if (stk.empty() || arr[i] <= arr[stk.top()])
+        {
+            stk.push(i);
+        }
+        else
+        {
+            while (!stk.empty()) // && arr[stk.top()] <= arr[i])
+            {
+                prev_max[stk.top()] = i;
+                stk.pop();
+            }
+            stk.push(i);
+        }
+    }
+    int result = 0;
+    for (int i = 0; i < n; i++)
+    {
+        result = max(result, (next_max[i] - prev_max[i] - 1));
+    }
+    cout << result << "\n";
 }
 
 int main()

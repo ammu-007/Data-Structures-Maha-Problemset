@@ -31,46 +31,46 @@ using namespace std;
 const int N = int(1e5 + 3);
 #define modulo 1000000007
 
-int partition(vector<int> &arr, int l, int r)
+int lengthOfLIS(vector<int> &nums)
 {
-    int pivot = arr[l];
-    int i = l;
-    int j = r;
-    do
+    int n = nums.size();
+    vector<vector<int>> dp(n, vector<int>(2, 0));
+    dp[0][0] = 1;
+    for (int i = 0; i < n; i++)
     {
-        do
-        {
-            i++;
-        } while (i < r && arr[i] <= pivot);
-        do
-        {
-            j--;
-        } while (j >= i && arr[j] > pivot);
-        if (i < j)
-        {
-            swap(arr[i], arr[j]);
-        }
-    } while (i < j);
-    swap(arr[l], arr[j]);
-    return j;
-}
-
-void quicksort(vector<int> &arr, int l, int r)
-{
-    if (l < r)
-    {
-        int split = partition(arr, l, r);
-        quicksort(arr, l, split);
-        quicksort(arr, split + 1, r);
+        dp[i][1] = nums[i];
     }
-}
-
-void solve()
-{
-    input(n);
-    scan(arr, n);
-    quicksort(arr, 0, n);
-    print(arr);
+    for (int i = 1; i < n; i++)
+    {
+        dp[i][0] = 1;
+        for (int j = i - 1; j >= 0; j--)
+        {
+            if (nums[j] > nums[i])
+                continue;
+            int max_len = dp[j][0] + 1;
+            if (dp[i][0] < max_len)
+            {
+                dp[i][0] = max_len;
+                dp[i][1] = nums[i] + dp[j][1];
+            }
+        }
+    }
+    int result = 0;
+    int result_sum = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (result == dp[i][0])
+        {
+            if (result_sum < dp[i][1])
+                result_sum = dp[i][1];
+        }
+        else if (result < dp[i][0])
+        {
+            result = dp[i][0];
+            result_sum = dp[i][1];
+        }
+    }
+    return result_sum;
 }
 
 int main()
@@ -79,11 +79,8 @@ int main()
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-    int test_cases;
-    cin >> test_cases;
-    while (test_cases--)
-    {
-        solve();
-    }
+    input(n);
+    scan(arr, n);
+    cout << lengthOfLIS(arr);
     return 0;
 }

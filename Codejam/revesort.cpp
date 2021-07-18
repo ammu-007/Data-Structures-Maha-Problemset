@@ -7,10 +7,10 @@ using namespace std;
         cin >> arr[i];
 #define inputs(n, m) \
     int n, m;        \
-    scanf("%d%d", &n, &m)
+    cin >> n >> m
 #define input(n) \
     int n;       \
-    scanf("%d", &n)
+    cin >> n
 #define print(any)        \
     for (auto i : any)    \
         cout << i << " "; \
@@ -31,8 +31,26 @@ using namespace std;
 const int N = int(1e5 + 3);
 #define modulo 1000000007
 
-void solve()
+int solve()
 {
+    input(n);
+    scan(arr, n);
+    int result = 0;
+    int j;
+    priority_queue<int, vector<int>, greater<int>> pq(arr.begin(), arr.end());
+    for (int i = 0; i < n - 1; i++)
+    {
+        int x = pq.top();
+        pq.pop();
+        for (j = i; j < n; j++)
+        {
+            if (arr[j] == x)
+                break;
+        }
+        reverse(arr.begin() + i, arr.begin() + j + 1);
+        result += j - i + 1;
+    }
+    return result;
 }
 
 int main()
@@ -43,9 +61,20 @@ int main()
 #endif
     int test_cases;
     cin >> test_cases;
-    while (test_cases--)
+    int tc = 1;
+    while (tc <= test_cases)
     {
-        solve();
+        cout << "Case #" << tc++ << ": " << solve() << "\n";
     }
     return 0;
 }
+
+/*
+3
+4
+4 2 1 3
+2
+1 2
+7
+7 6 5 4 3 2 1
+*/

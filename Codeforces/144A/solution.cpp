@@ -7,10 +7,10 @@ using namespace std;
         cin >> arr[i];
 #define inputs(n, m) \
     int n, m;        \
-    scanf("%d%d", &n, &m)
+    cin >> n >> m
 #define input(n) \
     int n;       \
-    scanf("%d", &n)
+    cin >> n
 #define print(any)        \
     for (auto i : any)    \
         cout << i << " "; \
@@ -33,6 +33,28 @@ const int N = int(1e5 + 3);
 
 void solve()
 {
+    input(n);
+    scan(arr, n);
+    int max_idx = max_element(arr.begin(), arr.end()) - arr.begin();
+    int count = 0;
+    for (int i = max_idx; i > 0; i--)
+    {
+        count++;
+        swap(arr[i], arr[i - 1]);
+    }
+    // deb(count);
+    // print(arr);
+    int min_ele = *min_element(arr.begin(), arr.end());
+    int min_idx;
+    for (int i = n - 1; i > 0; i--)
+    {
+        if (arr[i] == min_ele)
+        {
+            min_idx = i;
+            break;
+        }
+    }
+    cout << count + n - min_idx - 1;
 }
 
 int main()
@@ -41,11 +63,6 @@ int main()
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-    int test_cases;
-    cin >> test_cases;
-    while (test_cases--)
-    {
-        solve();
-    }
+    solve();
     return 0;
 }

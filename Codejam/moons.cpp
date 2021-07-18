@@ -7,10 +7,10 @@ using namespace std;
         cin >> arr[i];
 #define inputs(n, m) \
     int n, m;        \
-    scanf("%d%d", &n, &m)
+    cin >> n >> m
 #define input(n) \
     int n;       \
-    scanf("%d", &n)
+    cin >> n
 #define print(any)        \
     for (auto i : any)    \
         cout << i << " "; \
@@ -31,8 +31,36 @@ using namespace std;
 const int N = int(1e5 + 3);
 #define modulo 1000000007
 
-void solve()
+int solve()
 {
+    int result = 0;
+    inputs(x, y);
+    string str;
+    cin >> str;
+    for (int i = 0; i < str.size(); i++)
+    {
+        if (str[i] == '?')
+        {
+            if (i != 0)
+                str[i] = str[i - 1];
+        }
+    }
+    for (int i = str.size() - 1; i >= 0; i--)
+    {
+        if (str[i] == '?')
+        {
+            if (i != str.size() - 1)
+                str[i] = str[i + 1];
+        }
+    }
+    for (int i = 0; i < str.size() - 1; i++)
+    {
+        if (str[i] == 'C' && str[i + 1] == 'J')
+            result += x;
+        else if (str[i] == 'J' && str[i + 1] == 'C')
+            result += y;
+    }
+    return result   ;
 }
 
 int main()
@@ -43,9 +71,10 @@ int main()
 #endif
     int test_cases;
     cin >> test_cases;
-    while (test_cases--)
+    int tc = 1;
+    while (tc <= test_cases)
     {
-        solve();
+        cout << "Case #" << tc++ << ": " << solve() << "\n";
     }
     return 0;
 }

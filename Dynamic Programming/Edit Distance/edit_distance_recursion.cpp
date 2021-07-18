@@ -7,10 +7,10 @@ using namespace std;
         cin >> arr[i];
 #define inputs(n, m) \
     int n, m;        \
-    scanf("%d%d", &n, &m)
+    cin >> n >> m
 #define input(n) \
     int n;       \
-    scanf("%d", &n)
+    cin >> n
 #define print(any)        \
     for (auto i : any)    \
         cout << i << " "; \
@@ -31,8 +31,33 @@ using namespace std;
 const int N = int(1e5 + 3);
 #define modulo 1000000007
 
+int edit_distance(string s, string t, int n, int m, vector<vector<int>> &dp)
+{
+    if (m == 0)
+        return n + 1;
+    if (n == 0)
+        return m + 1;
+
+    if (dp[n][m] != -1)
+        return dp[n][m];
+
+    int result;
+    if (s[n] == t[m])
+        result = edit_distance(s, t, n - 1, m - 1, dp);
+    else
+        result = min(edit_distance(s, t, n, m - 1, dp), min(edit_distance(s, t, n - 1, m, dp), edit_distance(s, t, n - 1, m - 1, dp))) + 1;
+    dp[n][m] = result;
+    return result;
+}
+
 void solve()
 {
+    string s, t;
+    cin >> s >> t;
+    int n = s.size();
+    int m = t.size();
+    vector<vector<int>> dp(n + 1, (vector<int>(m, -1)));
+    cout << edit_distance(s, t, n - 1, m - 1, dp);
 }
 
 int main()

@@ -7,10 +7,10 @@ using namespace std;
         cin >> arr[i];
 #define inputs(n, m) \
     int n, m;        \
-    scanf("%d%d", &n, &m)
+    cin >> n >> m
 #define input(n) \
     int n;       \
-    scanf("%d", &n)
+    cin >> n
 #define print(any)        \
     for (auto i : any)    \
         cout << i << " "; \
@@ -31,8 +31,16 @@ using namespace std;
 const int N = int(1e5 + 3);
 #define modulo 1000000007
 
-void solve()
+void dfs(int src, vector<vector<int>> &g, vector<int> &distance)
 {
+    distance[src] = 1;
+    for (int adj : g[src])
+    {
+        if (distance[adj] == 0)
+        {
+            dfs(adj, g, distance);
+        }
+    }
 }
 
 int main()
@@ -41,11 +49,30 @@ int main()
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-    int test_cases;
-    cin >> test_cases;
-    while (test_cases--)
+    inputs(vertices, edges);
+    vector<vector<int>> g(vertices);
+    vector<int> distance(vertices, 0);
+    vector<pair<int, int>> result;
+    for (int i = 0; i < edges; i++)
     {
-        solve();
+        inputs(src, dest);
+        src -= 1;
+        dest -= 1;
+        g[src].pb(dest);
+        g[dest].pb(src);
     }
+    int count = -1;
+    for (int i = 0; i < vertices; i++)
+    {
+        if (distance[i] == 0)
+        {
+            result.push_back({i + 1, i}); // Storing min number of edges to complete the graph
+            dfs(i, g, distance);
+            count++;
+        }
+    }
+    printf("%d\n", count);
+    for (int i = 1; i <= count; i++)
+        printf("%d %d\n", result[i].first, result[i].second);
     return 0;
 }

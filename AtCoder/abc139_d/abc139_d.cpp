@@ -7,10 +7,10 @@ using namespace std;
         cin >> arr[i];
 #define inputs(n, m) \
     int n, m;        \
-    scanf("%d%d", &n, &m)
+    cin >> n >> m
 #define input(n) \
     int n;       \
-    scanf("%d", &n)
+    cin >> n
 #define print(any)        \
     for (auto i : any)    \
         cout << i << " "; \
@@ -31,21 +31,14 @@ using namespace std;
 const int N = int(1e5 + 3);
 #define modulo 1000000007
 
-void solve()
-{
-}
-
 int main()
 {
 #ifndef ONLINE_JUDGE
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-    int test_cases;
-    cin >> test_cases;
-    while (test_cases--)
-    {
-        solve();
-    }
+    long long n;
+    cin >> n;
+    cout << (n * (n - 1)) / 2;
     return 0;
 }

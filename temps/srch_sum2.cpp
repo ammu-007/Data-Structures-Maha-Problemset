@@ -7,10 +7,10 @@ using namespace std;
         cin >> arr[i];
 #define inputs(n, m) \
     int n, m;        \
-    scanf("%d%d", &n, &m)
+    cin >> n >> m
 #define input(n) \
     int n;       \
-    scanf("%d", &n)
+    cin >> n
 #define print(any)        \
     for (auto i : any)    \
         cout << i << " "; \
@@ -31,8 +31,43 @@ using namespace std;
 const int N = int(1e5 + 3);
 #define modulo 1000000007
 
+int binary_search(int i, int target, vector<int> arr)
+{
+    int l = i;
+    int n = arr.size();
+    while (l <= n)
+    {
+        int mid = (l + n) / 2;
+        if (arr[mid] == target)
+        {
+            return mid;
+        }
+        if (arr[mid] > target)
+        {
+            n = mid - 1;
+        }
+        else
+        {
+            l = mid + 1;
+        }
+    }
+    return 0;
+}
+
 void solve()
 {
+    input(n);
+    scan(arr, n);
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int j = i + 1; j < n; j++)
+        {
+            if (binary_search(j + 1, arr[i] + arr[j], arr) != 0)
+            {
+                cout << arr[i] << " + " << arr[j] << " = " << arr[binary_search(j + 1, arr[i] + arr[j], arr)] << endl;
+            }
+        }
+    }
 }
 
 int main()

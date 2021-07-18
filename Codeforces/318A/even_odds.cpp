@@ -41,11 +41,15 @@ int main()
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-    int test_cases;
-    cin >> test_cases;
-    while (test_cases--)
+    long long n, k;
+    cin >> n >> k;
+    if (k <= (n + 1) / 2)
     {
-        solve();
+        cout << k * 2 - 1 << "\n";
+    }
+    else
+    {
+        cout << (k - (n + 1) / 2) * 2 << "\n";
     }
     return 0;
 }

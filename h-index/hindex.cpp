@@ -1,16 +1,16 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define deb(x) cout << #x << ": " << x << endl
-#define scan(arr, n)            \
-    vector<int> arr(n);         \
+#define scan(citation, n)       \
+    vector<int> citation(n);    \
     for (int i = 0; i < n; i++) \
-        cin >> arr[i];
+        cin >> citation[i];
 #define inputs(n, m) \
     int n, m;        \
-    scanf("%d%d", &n, &m)
+    cin >> n >> m
 #define input(n) \
     int n;       \
-    scanf("%d", &n)
+    cin >> n
 #define print(any)        \
     for (auto i : any)    \
         cout << i << " "; \
@@ -31,8 +31,37 @@ using namespace std;
 const int N = int(1e5 + 3);
 #define modulo 1000000007
 
+int hindex_linear(int n, vector<int> citation)
+{
+    int index = -1;
+    for (int i = n - 1; i >= 0; i--)
+    {
+        if (citation[i] >= n - i)
+        {
+            index = n - i;
+        }
+    }
+    return index;
+}
+
+int hindex_binary(int l, int r, vector<int> citation, int index, int n)
+{
+    if (l >= r)
+        return index;
+    int mid = (l + r) / 2;
+    if (citation[mid] >= n - mid)
+        index = max(index, hindex_binary(l, mid, citation, n - mid, n));
+    else
+        index = max(index, hindex_binary(mid + 1, r, citation, index, n));
+    return index;
+}
+
 void solve()
 {
+    input(n);
+    scan(citation, n);
+    cout << hindex_linear(n, citation) << "\n";
+    cout << hindex_binary(0, n, citation, -1, n) << "\n";
 }
 
 int main()

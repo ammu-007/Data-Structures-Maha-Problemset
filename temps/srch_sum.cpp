@@ -7,10 +7,10 @@ using namespace std;
         cin >> arr[i];
 #define inputs(n, m) \
     int n, m;        \
-    scanf("%d%d", &n, &m)
+    cin >> n >> m
 #define input(n) \
     int n;       \
-    scanf("%d", &n)
+    cin >> n
 #define print(any)        \
     for (auto i : any)    \
         cout << i << " "; \
@@ -33,6 +33,19 @@ const int N = int(1e5 + 3);
 
 void solve()
 {
+    input(n);
+    scan(arr, n);
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = i + 1; j < n; j++)
+        {
+            for (int k = j + 1; k < n; k++)
+            {
+                if (arr[i] + arr[j] == arr[k])
+                    cout << arr[i] << " + " << arr[j] << " = " << arr[k] << endl;
+            }
+        }
+    }
 }
 
 int main()

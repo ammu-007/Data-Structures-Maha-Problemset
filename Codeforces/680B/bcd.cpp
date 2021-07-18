@@ -33,6 +33,33 @@ const int N = int(1e5 + 3);
 
 void solve()
 {
+    inputs(n, k);
+    scan(arr, n);
+    int i = k - 1;
+    int l = i - 1;
+    int r = i + 1;
+    int count = arr[i] == 1 ? 1 : 0;
+    while (l >= 0 && r < n)
+    {
+        if (arr[l] == 1 && arr[r] == 1)
+            count += 2;
+        l--;
+        r++;
+    }
+    while (l >= 0)
+    {
+        if (arr[l] == 1)
+            count++;
+        l--;
+    }
+    while (r < n)
+    {
+        if (arr[r] == 1)
+            count++;
+        r++;
+    }
+    printf("%d", count);
+    nl;
 }
 
 int main()

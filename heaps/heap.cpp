@@ -5,6 +5,7 @@ using namespace std;
     for (auto i : any)    \
         cout << i << " "; \
     nl;
+
 void heapify(int arr[], int n, int i)
 {
     int c1 = 2 * i + 1, c2 = 2 * i + 2;
@@ -20,6 +21,15 @@ void heapify(int arr[], int n, int i)
     }
 }
 
+int extract_max(int arr[], int &n)
+{
+    swap(arr[0], arr[n - 1]);
+    int result = arr[n - 1];
+    n--;
+    heapify(arr, n, 0);
+    return result;
+}
+
 void buildHeap(int arr[], int n)
 {
     for (int i = n / 2; i >= 0; i--)
@@ -28,9 +38,19 @@ void buildHeap(int arr[], int n)
 
 int main()
 {
-    int arr[] = {10, 2, 4, 1, 6, 3, 9, 5, 7, 8};
+    int arr[] = {32, 15, 20, 30, 12, 25, 16};
     int n = sizeof(arr) / sizeof(arr[0]);
     buildHeap(arr, n);
-    // cout << arr[0];
+    print(arr);
+    cout << extract_max(arr, n);
+    nl;
+    print(arr);
+    nl;
+    cout << extract_max(arr, n);
+    nl;
+    print(arr);
+    nl;
+    cout << extract_max(arr, n);
+    nl;
     print(arr);
 }

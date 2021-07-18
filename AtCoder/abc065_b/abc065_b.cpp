@@ -7,10 +7,10 @@ using namespace std;
         cin >> arr[i];
 #define inputs(n, m) \
     int n, m;        \
-    scanf("%d%d", &n, &m)
+    cin >> n >> m
 #define input(n) \
     int n;       \
-    scanf("%d", &n)
+    cin >> n
 #define print(any)        \
     for (auto i : any)    \
         cout << i << " "; \
@@ -31,8 +31,22 @@ using namespace std;
 const int N = int(1e5 + 3);
 #define modulo 1000000007
 
-void solve()
+void solve(vector<int> &arr, int n)
 {
+    int result = -1;
+    int i = 0;
+    do
+    {
+        int temp = arr[i] - 1;
+        arr[i] = -1;
+        i = temp;
+        result++;
+    } while (i != 1 && arr[i] != -1);
+    if (arr[i] == -1)
+        cout << -1;
+    else
+        cout << result + 1;
+    nl;
 }
 
 int main()
@@ -41,11 +55,8 @@ int main()
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-    int test_cases;
-    cin >> test_cases;
-    while (test_cases--)
-    {
-        solve();
-    }
+    input(n);
+    scan(arr, n);
+    solve(arr, n);
     return 0;
 }

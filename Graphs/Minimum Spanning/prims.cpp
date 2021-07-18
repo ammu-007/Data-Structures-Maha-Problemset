@@ -1,5 +1,8 @@
 #include <bits/stdc++.h>
+#include <chrono>
 using namespace std;
+
+using namespace std::chrono;
 #define deb(x) cout << #x << ": " << x << endl
 #define scan(arr, n)            \
     vector<int> arr(n);         \
@@ -76,7 +79,11 @@ int main()
         g[src].pb({wt, dest});
         g[dest].pb({wt, src});
     }
+    auto start = high_resolution_clock::now();
     primsMinimum(vertices, 1, g);
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+    cout << "Time taken by function: " << duration.count() / 1000000.0 << " seconds" << endl;
     return 0;
 }
 /*
@@ -88,3 +95,6 @@ int main()
 2 3 6
 */
 // 19
+
+// 614708
+// Time taken by function: 153962 microseconds

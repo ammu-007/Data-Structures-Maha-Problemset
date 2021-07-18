@@ -31,8 +31,27 @@ using namespace std;
 const int N = int(1e5 + 3);
 #define modulo 1000000007
 
-void solve()
+int solve(int n, int arr[], vector<int> &dp)
 {
+    if (n < 0)
+        return INT_MIN;
+    if (n == 0)
+        return 0;
+    if (dp[n] != -1)
+        return dp[n];
+    int a = solve(n - arr[0], arr, dp);
+    int b = solve(n - arr[1], arr, dp);
+    int c = solve(n - arr[2], arr, dp);
+    return dp[n] = 1 + max(a, max(b, c));
+}
+
+void solution()
+{
+    int n, a, b, c;
+    cin >> n >> a >> b >> c;
+    int arr[3] = {a, b, c};
+    vector<int> dp(n + 1, -1);
+    cout << solve(n, arr, dp) << "\n";
 }
 
 int main()
@@ -45,7 +64,7 @@ int main()
     cin >> test_cases;
     while (test_cases--)
     {
-        solve();
+        solution();
     }
     return 0;
 }

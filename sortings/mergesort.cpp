@@ -7,10 +7,10 @@ using namespace std;
         cin >> arr[i];
 #define inputs(n, m) \
     int n, m;        \
-    scanf("%d%d", &n, &m)
+    cin >> n >> m
 #define input(n) \
     int n;       \
-    scanf("%d", &n)
+    cin >> n
 #define print(any)        \
     for (auto i : any)    \
         cout << i << " "; \
@@ -31,8 +31,55 @@ using namespace std;
 const int N = int(1e5 + 3);
 #define modulo 1000000007
 
+int inversion = 0;
+
+void merge(int l, int mid, int r, vector<int> &arr)
+{
+    int temp[r - l + 1];
+    int i = l;
+    int j = mid + 1;
+    int k = 0;
+    while (i <= mid && j <= r)
+    {
+        if (arr[i] < arr[j])
+            temp[k++] = arr[i++];
+        else
+        {
+            inversion += mid - i + 1;
+            temp[k++] = arr[j++];
+        }
+    }
+    for (; i <= mid; i++)
+        temp[k++] = arr[i];
+    for (; j <= r; j++)
+        temp[k++] = arr[j];
+    print(temp);
+    for (int i = 0; i < k; i++)
+    {
+        arr[i + l] = temp[i];
+    }
+}
+
+void merge_sort(int l, int r, vector<int> &arr)
+{
+    if (l < r)
+    {
+        int mid = (l + r) / 2;
+        merge_sort(l, mid, arr);
+        merge_sort(mid + 1, r, arr);
+        merge(l, mid, r, arr);
+    }
+}
+
 void solve()
 {
+    input(n);
+    inversion = 0;
+    scan(arr, n);
+    merge_sort(0, n - 1, arr);
+    print(arr);
+    cout << "Inversions: " << inversion;
+    nl;
 }
 
 int main()
