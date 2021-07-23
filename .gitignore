@@ -3,3 +3,6 @@
 .vscode/
 *.code-workspace
 *.o
+Test/
+temps/
+Revision/
